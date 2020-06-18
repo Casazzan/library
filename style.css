@@ -1,3 +1,7 @@
+body {
+    background-color: rgb(61, 176, 221);
+}
+
 h1 {
     text-align: center;
     font-size: 5em;
@@ -5,10 +9,16 @@ h1 {
 
 .entry {
     position: relative;
+    font-size: 2em;
     width: 70%;
     left: 15%;
     display: grid;
-    grid-template-columns: 6fr 1fr 1fr;
+    grid-template-columns: repeat(6, 1fr);
+
+    
+    border-color: rgb(5, 1, 224);
+    border-style: solid;
+    border-width: 5px;
 }
 
 .hide {
@@ -19,14 +29,19 @@ h1 {
     display: block;
     z-index: 1;
 }
-/*
+
 .have-read {
-
-}
-.read-button {
-
+    opacity: .6;
 }
 
-.remove-button {
+button {
+    font-size: .7em;
+    margin: .5em;
+}
+.read-button:hover {
+    background-color: rgb(19, 143, 19);
+}
 
+.remove-button:hover {
+    background-color: rgb(204, 54, 54);
 }

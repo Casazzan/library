@@ -7,8 +7,12 @@ function Book (title, author, numPages, haveRead) {
     this.numPages = numPages;
     this.haveRead = haveRead;
     this.info = function () {
-        let readMessage = this.haveRead ? 'have read' : 'have not read yet';
+        const readMessage = this.haveRead ? 'have read' : 'have not read yet';
         return title + ' by '+ author + ', ' + numPages +' pages, ' + readMessage;
+    }
+    this.getInfoArray = function () {
+        const arr = [this.title, this.author, this.numPages, this.haveRead ? 'have read' : 'have not read yet'];
+        return arr;
     }
 }
 
@@ -65,9 +69,12 @@ function render() {
         div.classList.add('entry');
         div.setAttribute('data-index', i);
 
-        const info = document.createElement('p');
-        info.textContent = myLibrary[i].info();
-        div.appendChild(info);
+        const infoArray = myLibrary[i].getInfoArray()
+        for(let j = 0; j < 4; j++) {
+            const info = document.createElement('p');
+            info.textContent = infoArray[j];
+            div.appendChild(info);
+        }
 
         div.appendChild(createRemoveBtn());
 
@@ -109,5 +116,6 @@ function initialSetUp() {
     document.querySelector('#submit').addEventListener('click', submitNewBook);
     document.querySelector('#new-entry-container-close').addEventListener('click', changeNewEntryState)
     addBookToLibrary('the Hill', 'John', 120, true);
+    addBookToLibrary('how to', 'jim', 150, false);
     render();
 }
