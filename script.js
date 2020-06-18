@@ -99,14 +99,8 @@ function changeNewEntryState() {
     const form = document.querySelector('#new-entry-container');
     if(newEntry) {
         form.reset();
-        form.classList.remove('show');
-        form.classList.add('hide');
-
     }
-    else {
-        form.classList.remove('hide');
-        form.classList.add('show');
-    }
+    form.classList.toggle('hide');
     newEntry = !newEntry;
 }
 
