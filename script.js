@@ -46,7 +46,6 @@ function createReadStateButton(bool) {
 
 function changeReadState(e) {
     const index = e.target.parentNode.parentNode.dataset.index;
-    console.log(index);
     myLibrary[index].haveRead = !myLibrary[index].haveRead;
     render();
 }
