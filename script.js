@@ -86,8 +86,13 @@ function submitNewBook () {
     const author = document.querySelector('#author').value;
     const numPages = document.querySelector('#pages').value;
     const haveRead = document.querySelector('#read').checked;
-    addBookToLibrary(title, author, numPages, haveRead);
-    changeNewEntryState();
+    if(title && author && numPages) {
+        addBookToLibrary(title, author, numPages, haveRead);
+        changeNewEntryState();
+    }
+    else {
+        alert("Please fill out all portions of the form");
+    }
 }
 
 function changeNewEntryState() {
