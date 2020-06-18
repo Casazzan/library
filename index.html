@@ -7,7 +7,7 @@
     <link rel="stylesheet" href = "reset.css">
     <link rel="stylesheet" href = "style.css">
 </head>
-<body onload = "initialSetUp()">
+<body>
     <header>
         <h1>The Library</h1>
     </header>
@@ -33,8 +33,19 @@
     </form>
     <button id = "add">+</button>
     <div class = "entries">
-        
+        <table id = "book-table">
+            <thead>
+                <tr>
+                    <th scope = "col" id = "title-box">Title</th>
+                    <th scope = "col"id = "author-box">Author</th>
+                    <th scope = "col" id = "pages-box">Pages</th>
+                    <th scope = "col" id = "read-box">Read?</th>
+                    <th scope = "col" class = "button-box"></th>
+                    <th scope = "col" class = "button-box"></th>
+                </tr>
+            </thead>
+        </table>
     </div>
+    <script src = "script.js"></script>
 </body>
-<script src = "script.js"></script>
 </html>

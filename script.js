@@ -11,14 +11,13 @@ function Book (title, author, numPages, haveRead) {
         return title + ' by '+ author + ', ' + numPages +' pages, ' + readMessage;
     }
     this.getInfoArray = function () {
-        const arr = [this.title, this.author, this.numPages, this.haveRead ? 'have read' : 'have not read yet'];
+        const arr = [this.title, this.author, this.numPages, this.haveRead ? 'Yes' : 'No'];
         return arr;
     }
 }
 
 function addBookToLibrary(title, author, numPages, haveRead) {
     myLibrary.push(new Book(title, author, numPages, haveRead));
-    render();
 }
 
 function createRemoveBtn() {
@@ -30,7 +29,7 @@ function createRemoveBtn() {
 }
 
 function remove(e) {
-    const index = e.target.parentNode.dataset.index;
+    const index = e.target.parentNode.parentNode.dataset.index;
     if(confirm("Are you sure you want to delete the entry for: " + myLibrary[index].title)) {
         myLibrary.splice(index, 1);
         render();
@@ -46,44 +45,47 @@ function createReadStateButton(bool) {
 }
 
 function changeReadState(e) {
-    const index = e.target.parentNode.dataset.index;
+    const index = e.target.parentNode.parentNode.dataset.index;
+    console.log(index);
     myLibrary[index].haveRead = !myLibrary[index].haveRead;
     render();
 }
 
 function addBook() {
     changeNewEntryState();
-    render();
 }
 
 function render() {
+    const container = document.querySelector('#book-table');
     //remove old
-    const container = document.querySelector('.entries');
-    while(container.firstChild) {
-        container.removeChild(container.lastChild);
-    }
+    const prevEntries = container.querySelectorAll('.entry');
+    prevEntries.forEach(entry => {
+        container.removeChild(entry);
+    });
 
     //add new
     for(let i = 0; i < myLibrary.length; i++) {
-        const div = document.createElement('div');
-        div.classList.add('entry');
-        div.setAttribute('data-index', i);
+        const tr = document.createElement('tr');
+        tr.classList.add('entry');
+        tr.setAttribute('data-index', i);
 
         const infoArray = myLibrary[i].getInfoArray()
         for(let j = 0; j < 4; j++) {
-            const info = document.createElement('p');
+            const info = document.createElement('td');
             info.textContent = infoArray[j];
-            div.appendChild(info);
+            tr.appendChild(info);
         }
+        const removeBtn = document.createElement('td');
+        removeBtn.appendChild(createRemoveBtn());
+        tr.appendChild(removeBtn);
 
-        div.appendChild(createRemoveBtn());
-
-        div.appendChild(createReadStateButton(myLibrary[i].haveRead));
+        const readBtn = document.createElement('td');
+        readBtn.appendChild(createReadStateButton(myLibrary[i].haveRead));
+        tr.appendChild(readBtn);
         if(myLibrary[i].haveRead) {
-            div.classList.add('have-read');
+            tr.classList.add('have-read');
         }
-
-        container.appendChild(div);
+        container.appendChild(tr);
     }
 }
 
@@ -119,3 +121,5 @@ function initialSetUp() {
     addBookToLibrary('how to', 'jim', 150, false);
     render();
 }
+
+initialSetUp();
