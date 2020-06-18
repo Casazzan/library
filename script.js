@@ -1,4 +1,5 @@
 let myLibrary = [];
+let newEntry = false;
 
 function Book (title, author, numPages, haveRead) {
     this.title = title;
@@ -6,13 +7,14 @@ function Book (title, author, numPages, haveRead) {
     this.numPages = numPages;
     this.haveRead = haveRead;
     this.info = function () {
-        let readMessage = haveRead ? 'have read' : 'have not read yet';
+        let readMessage = this.haveRead ? 'have read' : 'have not read yet';
         return title + ' by '+ author + ', ' + numPages +' pages, ' + readMessage;
     }
 }
 
 function addBookToLibrary(title, author, numPages, haveRead) {
     myLibrary.push(new Book(title, author, numPages, haveRead));
+    render();
 }
 
 function createRemoveBtn() {
@@ -46,7 +48,7 @@ function changeReadState(e) {
 }
 
 function addBook() {
-    addBookToLibrary('Title', 'auth', 70, false);
+    changeNewEntryState();
     render();
 }
 
@@ -79,13 +81,28 @@ function render() {
 }
 
 
-//TODO:
 function submitNewBook () {
-
+    const title = document.querySelector('#title').value;
+    const author = document.querySelector('#author').value;
+    const numPages = document.querySelector('#pages').value;
+    const haveRead = document.querySelector('#read').checked;
+    addBookToLibrary(title, author, numPages, haveRead);
+    changeNewEntryState();
 }
 
 function changeNewEntryState() {
-    
+    const form = document.querySelector('#new-entry-container');
+    if(newEntry) {
+        form.reset();
+        form.classList.remove('show');
+        form.classList.add('hide');
+
+    }
+    else {
+        form.classList.remove('hide');
+        form.classList.add('show');
+    }
+    newEntry = !newEntry;
 }
 
 function initialSetUp() {

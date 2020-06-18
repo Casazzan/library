@@ -10,6 +10,15 @@ h1 {
     display: grid;
     grid-template-columns: 6fr 1fr 1fr;
 }
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+    z-index: 1;
+}
 /*
 .have-read {
 
