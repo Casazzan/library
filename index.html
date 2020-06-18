@@ -3,9 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Library</title>
+    <link rel="stylesheet" href = "reset.css">
+    <link rel="stylesheet" href = "style.css">
 </head>
-<body>
-    
+<body onload = "initialSetUp()">
+    <header>
+        <h1>The Library</h1>
+    </header>
+    <form id = "new-entry-container" class = "hide">
+        <button id = "new-entry-container-close">X</button>
+        <div class="new-entry">
+            <label for = "title">Title:</label>
+            <input type = "text" id = "title" required minlength="1">
+        </div>
+        <div class="new-entry">
+            <label for = "author">Author:</label>
+            <input type = "text" id = "author" required minlength="1">
+        </div>
+        <div class="new-entry">
+            <label for = "pages">Number of Pages:</label>
+            <input type = "text" id = "pages" required minlength="1">
+        </div>
+        <div class="new-entry">
+            <label for = "read">Check if already read:</label>
+            <input type = "checkbox" id = "read">
+        </div>
+        <button id = "submit">Submit</button>
+    </form>
+    <button id = "add">+</button>
+    <div class = "entries">
+
+    </div>
 </body>
+<script src = "script.js"></script>
 </html>
