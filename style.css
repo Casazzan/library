@@ -9,18 +9,6 @@ h1 {
     font-size: 5em;
 }
 
-.entry {
-    border-color: rgb(0, 95, 139);
-    border-style: solid;
-    border-width: 5px;
-}
-
-#entries {
-    position: relative;
-    width: 80%;
-    left: 10%;
-}
-
 div#new-entry-container {
     position: absolute;
     width: 30%;
@@ -55,6 +43,7 @@ div#new-entry-container {
 input {
     font-size: .7em;
 }
+
 input#pages {
     width: 20%;
 }
@@ -68,12 +57,27 @@ input#pages {
     margin: .1em;
 }
 
+
+#entries {
+    position: relative;
+    width: 80%;
+    left: 10%;
+}
+
 table {
     display: table;
     table-layout: fixed;
     width: 100%;
     font-size: 2em;
     outline: solid;
+}
+
+table td + td { border-left:5px solid rgb(0, 95, 139); }
+
+.entry {
+    border-color: rgb(0, 95, 139);
+    border-style: solid;
+    border-width: 5px;
 }
 
 .dim-background {
@@ -83,8 +87,6 @@ table {
 .dim {
     filter: brightness(.4);
 }
-
-table td + td { border-left:5px solid rgb(0, 95, 139); }
 
 #book-table td, #book-table th{
     text-align: center;
@@ -111,11 +113,12 @@ table td + td { border-left:5px solid rgb(0, 95, 139); }
     opacity: .6;
 }
 
-#add{
+#add-button{
     position: absolute;
     bottom: 5%;
     right: 5%;
     border-radius: 50%;
+    border-color: white;
     height: 3em;
     width: 3em;
     font-size: 50px;

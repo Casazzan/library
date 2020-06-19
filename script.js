@@ -16,10 +16,61 @@ function Book (title, author, numPages, haveRead) {
     }
 }
 
+
+//new-entry addition functions
 function addBookToLibrary(title, author, numPages, haveRead) {
     myLibrary.push(new Book(title, author, numPages, haveRead));
 }
 
+function addBook() {
+    changeNewEntryState();
+}
+
+function submitNewBook () {
+    const title = document.querySelector('#title').value;
+    const author = document.querySelector('#author').value;
+    const numPages = document.querySelector('#pages').value;
+    const haveRead = document.querySelector('#read').checked;
+    if(title && author && !isNaN(numPages)) {
+        addBookToLibrary(title, author, numPages, haveRead);
+        changeNewEntryState();
+        render();
+    }
+    else {
+        alert("Invalid submission: Please fill out all portions of the form correctly");
+    }
+}
+
+function changeNewEntryState() {
+    const container = document.querySelector('#new-entry-container');
+    const form = container.querySelector('#new-entry-form');
+    if(newEntry) {
+        form.reset();
+    }
+    document.querySelector('body').classList.toggle('dim-background');
+    document.querySelector('#entries').classList.toggle('dim');
+    container.classList.toggle('hide');
+    newEntry = !newEntry;
+}
+
+
+//entry editing functions
+function remove(e) {
+    const index = e.target.parentNode.parentNode.dataset.index;
+    if(confirm("Are you sure you want to delete the entry for: " + myLibrary[index].title)) {
+        myLibrary.splice(index, 1);
+        render();
+    }
+}
+
+function changeReadState(e) {
+    const index = e.target.parentNode.parentNode.dataset.index;
+    myLibrary[index].haveRead = !myLibrary[index].haveRead;
+    render();
+}
+
+
+//button creation helpers
 function createRemoveBtn() {
     const removeBtn = document.createElement('button');
     removeBtn.textContent = "Remove";
@@ -28,13 +79,6 @@ function createRemoveBtn() {
     return removeBtn;
 }
 
-function remove(e) {
-    const index = e.target.parentNode.parentNode.dataset.index;
-    if(confirm("Are you sure you want to delete the entry for: " + myLibrary[index].title)) {
-        myLibrary.splice(index, 1);
-        render();
-    }
-}
 
 function createReadStateButton(bool) {
     const readBtn = document.createElement('button');
@@ -44,16 +88,7 @@ function createReadStateButton(bool) {
     return readBtn;
 }
 
-function changeReadState(e) {
-    const index = e.target.parentNode.parentNode.dataset.index;
-    myLibrary[index].haveRead = !myLibrary[index].haveRead;
-    render();
-}
-
-function addBook() {
-    changeNewEntryState();
-}
-
+//main
 function render() {
     const container = document.querySelector('#book-table');
     //remove old
@@ -88,38 +123,9 @@ function render() {
     }
 }
 
-
-function submitNewBook () {
-    const title = document.querySelector('#title').value;
-    const author = document.querySelector('#author').value;
-    const numPages = document.querySelector('#pages').value;
-    const haveRead = document.querySelector('#read').checked;
-    if(title && author && !isNaN(numPages)) {
-        addBookToLibrary(title, author, numPages, haveRead);
-        changeNewEntryState();
-        render();
-    }
-    else {
-        alert("Please fill out all portions of the form correctly");
-    }
-}
-
-function changeNewEntryState() {
-    const container = document.querySelector('#new-entry-container');
-    const form = container.querySelector('#new-entry-form');
-    if(newEntry) {
-        form.reset();
-    }
-    document.querySelector('body').classList.toggle('dim-background');
-    document.querySelector('#entries').classList.toggle('dim');
-    container.classList.toggle('hide');
-    newEntry = !newEntry;
-}
-
 //initial set up
-document.querySelector('#add').addEventListener('click', addBook);
-document.querySelector('#submit').addEventListener('click', submitNewBook);
+document.querySelector('#add-button').addEventListener('click', addBook);
+document.querySelector('#submit-button').addEventListener('click', submitNewBook);
 document.querySelector('#new-entry-form-close').addEventListener('click', changeNewEntryState)
-addBookToLibrary('the Hill', 'John', 120, true);
-addBookToLibrary('how to', 'jim', 150, false);
+addBookToLibrary('Harry Potter and the Chamber of Secrets', 'J.K. Rowling', 327, false);
 render();
