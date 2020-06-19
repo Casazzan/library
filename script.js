@@ -94,12 +94,13 @@ function submitNewBook () {
     const author = document.querySelector('#author').value;
     const numPages = document.querySelector('#pages').value;
     const haveRead = document.querySelector('#read').checked;
-    if(title && author && !isNan(numPages)) {
+    if(title && author && !isNaN(numPages)) {
         addBookToLibrary(title, author, numPages, haveRead);
         changeNewEntryState();
+        render();
     }
     else {
-        alert("Please fill out all portions of the form");
+        alert("Please fill out all portions of the form correctly");
     }
 }
 
@@ -115,13 +116,10 @@ function changeNewEntryState() {
     newEntry = !newEntry;
 }
 
-function initialSetUp() {
-    document.querySelector('#add').addEventListener('click', addBook);
-    document.querySelector('#submit').addEventListener('click', submitNewBook);
-    document.querySelector('#new-entry-form-close').addEventListener('click', changeNewEntryState)
-    addBookToLibrary('the Hill', 'John', 120, true);
-    addBookToLibrary('how to', 'jim', 150, false);
-    render();
-}
-
-initialSetUp();
+//initial set up
+document.querySelector('#add').addEventListener('click', addBook);
+document.querySelector('#submit').addEventListener('click', submitNewBook);
+document.querySelector('#new-entry-form-close').addEventListener('click', changeNewEntryState)
+addBookToLibrary('the Hill', 'John', 120, true);
+addBookToLibrary('how to', 'jim', 150, false);
+render();
