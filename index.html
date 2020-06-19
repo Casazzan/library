@@ -11,28 +11,33 @@
     <header>
         <h1>The Library</h1>
     </header>
-    <form id = "new-entry-container" class = "hide">
-        <button id = "new-entry-container-close">X</button>
-        <div class="new-entry">
-            <label for = "title">Title:</label>
-            <input type = "text" id = "title" minlength="1">
+    <div id = "new-entry-container" class = "hide">
+        <div id = new-entry-header>
+            <h2>Enter Book Information</h2>
+            <button id = "new-entry-form-close">X</button>
         </div>
-        <div class="new-entry">
-            <label for = "author">Author:</label>
-            <input type = "text" id = "author" minlength="1">
-        </div>
-        <div class="new-entry">
-            <label for = "pages">Number of Pages:</label>
-            <input type = "text" id = "pages" minlength="1">
-        </div>
-        <div class="new-entry">
-            <label for = "read">Check if already read:</label>
-            <input type = "checkbox" id = "read">
-        </div>
-        <button id = "submit" type="button">Submit</button>
-    </form>
+        <form id = "new-entry-form">
+            <div class="new-entry">
+                <label for = "title">Title:</label>
+                <input type = "text" id = "title" minlength="1">
+            </div>
+            <div class="new-entry">
+                <label for = "author">Author:</label>
+                <input type = "text" id = "author" minlength="1">
+            </div>
+            <div class="new-entry">
+                <label for = "pages">Number of Pages:</label>
+                <input type = "text" id = "pages" minlength="1">
+            </div>
+            <div class="new-entry">
+                <label for = "read">Check if already read:</label>
+                <input type = "checkbox" id = "read">
+            </div>
+            <button id = "submit" type="button">Submit</button>
+        </form>
+    </div>
     <button id = "add">+</button>
-    <div class = "entries">
+    <div id = "entries">
         <table id = "book-table">
             <thead>
                 <tr>

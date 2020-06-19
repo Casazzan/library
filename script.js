@@ -94,7 +94,7 @@ function submitNewBook () {
     const author = document.querySelector('#author').value;
     const numPages = document.querySelector('#pages').value;
     const haveRead = document.querySelector('#read').checked;
-    if(title && author && numPages) {
+    if(title && author && !isNan(numPages)) {
         addBookToLibrary(title, author, numPages, haveRead);
         changeNewEntryState();
     }
@@ -104,18 +104,21 @@ function submitNewBook () {
 }
 
 function changeNewEntryState() {
-    const form = document.querySelector('#new-entry-container');
+    const container = document.querySelector('#new-entry-container');
+    const form = container.querySelector('#new-entry-form');
     if(newEntry) {
         form.reset();
     }
-    form.classList.toggle('hide');
+    document.querySelector('body').classList.toggle('dim-background');
+    document.querySelector('#entries').classList.toggle('dim');
+    container.classList.toggle('hide');
     newEntry = !newEntry;
 }
 
 function initialSetUp() {
     document.querySelector('#add').addEventListener('click', addBook);
     document.querySelector('#submit').addEventListener('click', submitNewBook);
-    document.querySelector('#new-entry-container-close').addEventListener('click', changeNewEntryState)
+    document.querySelector('#new-entry-form-close').addEventListener('click', changeNewEntryState)
     addBookToLibrary('the Hill', 'John', 120, true);
     addBookToLibrary('how to', 'jim', 150, false);
     render();

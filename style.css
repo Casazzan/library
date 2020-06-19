@@ -1,3 +1,4 @@
+
 body {
     background-color: rgb(61, 176, 221);
     color: black;
@@ -14,10 +15,57 @@ h1 {
     border-width: 5px;
 }
 
-.entries {
+#entries {
     position: relative;
     width: 80%;
     left: 10%;
+}
+
+div#new-entry-container {
+    position: absolute;
+    width: 30%;
+    height: 40%;
+    top: 30%;
+    left: 35%;
+    margin: 0 auto;
+
+    filter: brightness(1);
+    background-color: rgb(61, 176, 221);
+    font-size: 2em;
+    z-index: 1;
+}
+
+#new-entry-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+    border-bottom: white;
+    border-width: 5px;
+    border-style: none none solid none;
+}
+
+#new-entry-form {
+    padding-left: 10px;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+input {
+    font-size: .7em;
+}
+input#pages {
+    width: 20%;
+}
+
+#submit {
+    align-self: center;
+}
+
+#new-entry-form-close {
+    align-self: flex-start;
+    margin: .1em;
 }
 
 table {
@@ -26,6 +74,14 @@ table {
     width: 100%;
     font-size: 2em;
     outline: solid;
+}
+
+.dim-background {
+    background-color: rgb(35, 100, 126);
+}
+
+.dim {
+    filter: brightness(.4);
 }
 
 table td + td { border-left:5px solid rgb(0, 95, 139); }
@@ -56,7 +112,7 @@ table td + td { border-left:5px solid rgb(0, 95, 139); }
 }
 
 #add{
-    position: fixed;
+    position: absolute;
     bottom: 5%;
     right: 5%;
     border-radius: 50%;
@@ -70,6 +126,7 @@ button {
     font-size: .7em;
     margin: .5em;
     background-color: rgb(0, 95, 139);
+    width: fit-content;
 }
 
 .read-button:hover {
