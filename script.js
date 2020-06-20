@@ -31,7 +31,7 @@ function submitNewBook () {
     const author = document.querySelector('#author').value;
     const numPages = document.querySelector('#pages').value;
     const haveRead = document.querySelector('#read').checked;
-    if(title && author && !isNaN(numPages)) {
+    if(title && author && numPages && !isNaN(numPages)) {
         addBookToLibrary(title, author, numPages, haveRead);
         changeNewEntryState();
         render();
