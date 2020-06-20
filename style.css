@@ -62,6 +62,7 @@ input#pages {
     position: relative;
     width: 80%;
     left: 10%;
+    top: 50px;
 }
 
 table {
