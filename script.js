@@ -1,25 +1,31 @@
 let myLibrary = [];
 let newEntry = false;
 
-function Book (title, author, numPages, haveRead) {
-    this.title = title;
-    this.author = author;
-    this.numPages = numPages;
-    this.haveRead = haveRead;
-    this.info = function () {
-        const readMessage = this.haveRead ? 'have read' : 'have not read yet';
-        return title + ' by '+ author + ', ' + numPages +' pages, ' + readMessage;
-    }
-    this.getInfoArray = function () {
-        const arr = [this.title, this.author, this.numPages, this.haveRead ? 'Yes' : 'No'];
-        return arr;
-    }
-}
+var firebaseConfig = {
+    apiKey: "AIzaSyDeV6C3Et7N5rCtgFSoSTxqnXpoq6eBwI8",
+    authDomain: "fir-library-6b7b7.firebaseapp.com",
+    databaseURL: "https://fir-library-6b7b7.firebaseio.com",
+    projectId: "fir-library-6b7b7",
+    storageBucket: "fir-library-6b7b7.appspot.com",
+    messagingSenderId: "204556789011",
+    appId: "1:204556789011:web:27d1f5c01878b7c0d6e6e6",
+    measurementId: "G-GTVJN0RQ2X"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+//firebase.analytics();
 
+//create references
+const dbRef = firebase.database().ref();
+const booksRef = dbRef.child('books');
+booksRef.orderByChild("title");
+booksRef.on('value', fillLocalLibrary);
+//booksRef.once('value').then(fillLocalLibrary);
 
 //new-entry addition functions
 function addBookToLibrary(title, author, numPages, haveRead) {
-    myLibrary.push(new Book(title, author, numPages, haveRead));
+    const key = booksRef.push( {title, author, numPages, haveRead} ).key;
+    booksRef.child(key).update( {key, key});
 }
 
 function addBook() {
@@ -30,7 +36,7 @@ function submitNewBook () {
     const title = document.querySelector('#title').value;
     const author = document.querySelector('#author').value;
     const numPages = document.querySelector('#pages').value;
-    const haveRead = document.querySelector('#read').checked;
+    const haveRead = document.querySelector('#read').checked ? 'Yes': 'No';
     if(title && author && numPages && !isNaN(numPages)) {
         addBookToLibrary(title, author, numPages, haveRead);
         changeNewEntryState();
@@ -58,15 +64,15 @@ function changeNewEntryState() {
 function remove(e) {
     const index = e.target.parentNode.parentNode.dataset.index;
     if(confirm("Are you sure you want to delete the entry for: " + myLibrary[index].title)) {
-        myLibrary.splice(index, 1);
+        booksRef.child(myLibrary[index].key).remove();
         render();
     }
 }
 
 function changeReadState(e) {
     const index = e.target.parentNode.parentNode.dataset.index;
-    myLibrary[index].haveRead = !myLibrary[index].haveRead;
-    render();
+    myLibrary[index].haveRead = myLibrary[index].haveRead == 'Yes' ? 'No': 'Yes';
+    booksRef.child(myLibrary[index].key).update(myLibrary[index]);
 }
 
 
@@ -80,9 +86,9 @@ function createRemoveBtn() {
 }
 
 
-function createReadStateButton(bool) {
+function createReadStateButton(haveRead) {
     const readBtn = document.createElement('button');
-    readBtn.textContent = bool ? 'Mark Unread' : 'Mark Read';
+    readBtn.textContent = haveRead == 'Yes' ? 'Mark Unread' : 'Mark Read';
     readBtn.classList.add('read-button');
     readBtn.addEventListener('click', changeReadState);
     return readBtn;
@@ -103,12 +109,25 @@ function render() {
         tr.classList.add('entry');
         tr.setAttribute('data-index', i);
 
-        const infoArray = myLibrary[i].getInfoArray()
-        for(let j = 0; j < 4; j++) {
-            const info = document.createElement('td');
-            info.textContent = infoArray[j];
-            tr.appendChild(info);
-        }
+        const book = myLibrary[i];
+        // for(const key in book) {
+        //     const info = document.createElement('td');  Out of order
+        //     info.textContent = book[key];
+        //     tr.appendChild(info);
+        // }
+        let info = document.createElement('td');
+        info.textContent = book.title;
+        tr.appendChild(info);
+        info = document.createElement('td')
+        info.textContent = book.author;
+        tr.appendChild(info);
+        info = document.createElement('td')
+        info.textContent = book.numPages;
+        tr.appendChild(info);
+        info = document.createElement('td')
+        info.textContent = book.haveRead;
+        tr.appendChild(info);
+
         const removeBtn = document.createElement('td');
         removeBtn.appendChild(createRemoveBtn());
         tr.appendChild(removeBtn);
@@ -116,16 +135,24 @@ function render() {
         const readBtn = document.createElement('td');
         readBtn.appendChild(createReadStateButton(myLibrary[i].haveRead));
         tr.appendChild(readBtn);
-        if(myLibrary[i].haveRead) {
+        if(myLibrary[i].haveRead == 'Yes') {
             tr.classList.add('have-read');
         }
         container.appendChild(tr);
     }
 }
 
+function fillLocalLibrary(snap) {
+    myLibrary = [];
+    for(const key in snap.val()) {
+        const bookObj = snap.val()[key];
+        myLibrary.push(bookObj);
+    }
+    render();
+}
+
 //initial set up
 document.querySelector('#add-button').addEventListener('click', addBook);
 document.querySelector('#submit-button').addEventListener('click', submitNewBook);
-document.querySelector('#new-entry-form-close').addEventListener('click', changeNewEntryState)
-addBookToLibrary('Harry Potter and the Chamber of Secrets', 'J.K. Rowling', 327, false);
+document.querySelector('#new-entry-form-close').addEventListener('click', changeNewEntryState);
 render();
