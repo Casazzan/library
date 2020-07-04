@@ -56,6 +56,9 @@ function changeNewEntryState() {
     document.querySelector('body').classList.toggle('dim-background');
     document.querySelector('#entries').classList.toggle('dim');
     container.classList.toggle('hide');
+    if(!newEntry) {
+        document.getElementById('title').focus();
+    }
     newEntry = !newEntry;
 }
 
