@@ -115,9 +115,9 @@ table td + td { border-left:5px solid rgb(0, 95, 139); }
 }
 
 #add-button{
-    position: absolute;
-    bottom: 5%;
-    right: 5%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
     border-radius: 50%;
     border-color: white;
     height: 3em;
